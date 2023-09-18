@@ -8,7 +8,6 @@
 import XCTest
 
 final class MVP_DemoUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
