@@ -16,8 +16,8 @@ enum CustomError: Error {
 }
 
 protocol UserPresenterDelegate: AnyObject {
-    func presentUserData(user: [User])
-    func presentAlertOnView(title: String, subTitle: String)
+    func presentUserData(users: [User])
+    func presentAlertOnView(_ title: String, _ subTitle: String)
 }
 
 typealias PresenterDelegate = UIViewController & UserPresenterDelegate
@@ -34,9 +34,12 @@ final class UserPresenter {
             throw CustomError.badURL
         }
         let (data, responseObject) = try await URLSession.shared.data(from: url)
-        print(responseObject)
         let decoder = JSONDecoder()
         let users = try decoder.decode([User].self, from: data)
-        delegate?.presentUserData(user: users)
+        delegate?.presentUserData(users: users)
+    }
+
+    public func didTap(user: User) {
+        delegate?.presentAlertOnView(user.name, "Above user has \(user.username) and \(user.email) is the email")
     }
 }
